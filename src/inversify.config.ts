@@ -1,21 +1,19 @@
 import {Container, interfaces} from "inversify";
 import {SessionController} from "./adapter/web/SessionController";
-import {CommandFactory} from "./application/commands/CommandFactory";
-import {CommandProcessor} from "./application/commands/CommandProcessor";
 import {EventBus} from "./application/events/EventBus";
 import {ResponseMapper} from "./adapter/web/ResponseMapper";
 import {TYPES} from "./inversify.types";
 import express, {Express} from "express";
 import bodyParser from "body-parser";
 import {InMemorySessionRepository} from "./adapter/persistence/InMemorySessionRepository";
+import {GameSessionService} from "./application/services/GameSessionService";
 
 const container = new Container({defaultScope: "Singleton"});
 
 container.bind(SessionController).toSelf();
 container.bind(ResponseMapper).toSelf();
 
-container.bind(CommandFactory).toSelf();
-container.bind(CommandProcessor).toSelf();
+container.bind(GameSessionService).toSelf();
 
 container.bind(EventBus).toSelf().onActivation((context: interfaces.Context, eventBus: EventBus): EventBus => {
     // eventBus.subscribe("ROAD_BUILT", context.container.get(LongestRoadPolicy));

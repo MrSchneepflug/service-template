@@ -15,7 +15,3 @@ I'm happy with most parts. Some parts still suck though.
 > Cheers to my current team. This repository is influenced a lot by my daily work.
 - dependency injection with Inversify
 - scaffolding for custom Jest matchers
-- scaffolding of command processor and event bus
-
-**Things to reconsider:**
-- splitting commands into command/handler

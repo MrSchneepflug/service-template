@@ -1,7 +1,6 @@
 import {GameSessionResponse} from "./responses/GameSessionResponse";
 import {GameSession} from "../../application/entities/GameSession";
 import {injectable} from "inversify";
-import {CommandError} from "../../application/commands/CommandError";
 
 @injectable()
 export class ResponseMapper {
@@ -10,7 +9,7 @@ export class ResponseMapper {
         return {id, players}
     }
 
-    mapToErrorResponse(error: CommandError) {
+    mapToErrorResponse(error: Error) {
         return {
             error: error.message
         };
