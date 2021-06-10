@@ -1,38 +1,50 @@
-import {setup, teardown} from "../../config/setup";
+import {setup, teardown} from "../setup";
 import {ApiActor} from "../actors/ApiActor";
 import {PersistenceActor} from "../actors/PersistenceActor";
-import {DEFAULT_PLAYER_NAMES, someGameSession} from "../../data/GameSession";
-import {Player} from "../../../src/application/entities/Player";
+import {someGameSession} from "../../data/GameSession";
 import {uuid} from "../../../src/application/util/util";
+import {someCard} from "../../data/Card";
 
 describe("game sessions", () => {
     let apiActor: ApiActor, persistenceActor: PersistenceActor;
 
-    beforeAll(() => {
-        const testUtils = setup();
+    beforeAll(async () => {
+        const testUtils = await setup();
         apiActor = testUtils.apiActor;
         persistenceActor = testUtils.persistenceActor;
     });
 
-    afterAll(teardown);
+    afterAll(async () => await teardown());
+    afterEach(async () => await persistenceActor.clearTables());
 
     test("will create a new game session with all provided players", async () => {
-        const {status, data: {players}} = await apiActor.initializeGameSession();
+         const {status, data: {id}} = await apiActor.initializeGameSession();
 
         expect(status).toEqual(201);
-        expect(players).toHaveLength(2);
-        expect(players.map((player: Player) => player.name)).toEqual(DEFAULT_PLAYER_NAMES);
+        expect(id).toBeDefined();
     });
 
     test("will retrieve an already initialized game session", async () => {
         const gameSessionId = uuid();
-        persistenceActor.withGameSession(someGameSession({id: gameSessionId}));
+        const gameSession = someGameSession({
+            id: gameSessionId,
+            done: true,
+            cards: [
+                someCard({owner: "player", card: "🂽"}),
+                someCard({owner: "player", card: "🂱"}),
+                someCard({owner: "dealer", card: "🂪"}),
+                someCard({owner: "dealer", card: "🂩"}),
+                someCard({owner: "dealer", card: "🃍"}),
+            ],
+        });
 
-        const {status, data: {id, players}} = await apiActor.retrieveGameSession(gameSessionId)
+        await persistenceActor.withGameSession(gameSession);
+
+        const {status, data: {id, done, cards}} = await apiActor.retrieveGameSession(gameSessionId)
 
         expect(status).toEqual(200);
         expect(id).toEqual(gameSessionId);
-        expect(players).toHaveLength(2);
-        expect(players.map((player: Player) => player.name)).toEqual(DEFAULT_PLAYER_NAMES);
+        expect(done).toBe(true);
+        expect(cards).toHaveLength(5);
     });
 });

@@ -1,11 +1,10 @@
 import axios from "axios";
-import {DEFAULT_PLAYER_NAMES} from "../../data/GameSession";
 
 export class ApiActor {
     constructor(private readonly servicePort: number) {}
 
-    async initializeGameSession(playerNames: string[] = DEFAULT_PLAYER_NAMES) {
-        return await axios.post(`http://localhost:${this.servicePort}/sessions`, {playerNames});
+    async initializeGameSession() {
+        return await axios.post(`http://localhost:${this.servicePort}/sessions`);
     }
 
     async retrieveGameSession(gameSessionId: string) {

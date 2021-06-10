@@ -5,8 +5,8 @@ import {injectable} from "inversify";
 @injectable()
 export class ResponseMapper {
     mapToGameSessionResponse(gameSession: GameSession): GameSessionResponse {
-        const {id, players} = gameSession;
-        return {id, players}
+        const {id, done, cards} = gameSession;
+        return {id, done, cards: cards.map(({id, owner, card}) => ({id, owner, card}))}
     }
 
     mapToErrorResponse(error: Error) {

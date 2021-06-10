@@ -1,0 +1,24 @@
+version: "3"
+services:
+  test:
+    image: node:16
+    volumes:
+      - .:/service
+    working_dir: "/service"
+    environment:
+      TYPEORM_HOST: "postgres"
+      TYPEORM_USERNAME: "service"
+      TYPEORM_PASSWORD: "secret"
+      TYPEORM_DATABASE: "service_test"
+    entrypoint: "./entrypoint.sh"
+    depends_on:
+      - postgres
+
+  postgres:
+    image: postgres
+    environment:
+      POSTGRES_USER: "service"
+      POSTGRES_PASSWORD: "secret"
+      POSTGRES_DB: "service_test"
+    ports:
+      - "5432:5432"

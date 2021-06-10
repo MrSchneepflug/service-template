@@ -7,6 +7,11 @@ module.exports = {
   ],
   collectCoverage: true,
   collectCoverageFrom: [
-    "src/**/*.ts"
-  ]
+    "src/**/*.ts",
+  ],
+  testPathIgnorePatterns: [
+      "<rootDir>/node_modules/",
+      "<rootDir>/dist",
+  ],
+  verbose: true,
 };

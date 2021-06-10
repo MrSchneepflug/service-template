@@ -5,15 +5,15 @@ import {ResponseMapper} from "./adapter/web/ResponseMapper";
 import {TYPES} from "./inversify.types";
 import express, {Express} from "express";
 import bodyParser from "body-parser";
-import {InMemorySessionRepository} from "./adapter/persistence/InMemorySessionRepository";
 import {GameSessionService} from "./application/services/GameSessionService";
+import {EntityMapper} from "./adapter/persistence/postgres/EntityMapper";
+import {PostgresGameSessionRepository} from "./adapter/persistence/postgres/PostgresGameSessionRepository";
 
 const container = new Container({defaultScope: "Singleton"});
 
 container.bind(SessionController).toSelf();
-container.bind(ResponseMapper).toSelf();
-
 container.bind(GameSessionService).toSelf();
+container.bind(ResponseMapper).toSelf();
 
 container.bind(EventBus).toSelf().onActivation((context: interfaces.Context, eventBus: EventBus): EventBus => {
     // eventBus.subscribe("ROAD_BUILT", context.container.get(LongestRoadPolicy));
@@ -32,6 +32,7 @@ container.bind<Express>(TYPES.App).toDynamicValue((context: interfaces.Context):
     return app;
 });
 
-container.bind(TYPES.SessionRepository).to(InMemorySessionRepository);
+container.bind(TYPES.GameSessionRepository).to(PostgresGameSessionRepository);
+container.bind(EntityMapper).toSelf();
 
 export default container;

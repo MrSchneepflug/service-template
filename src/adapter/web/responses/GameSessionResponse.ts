@@ -1,6 +1,7 @@
-import {Player} from "../../../application/entities/Player";
+import {Card} from "../../../application/entities/Card";
 
 export interface GameSessionResponse {
     readonly id: string;
-    readonly players: ReadonlyArray<Player>;
+    readonly done: boolean;
+    readonly cards: Card[];
 }
