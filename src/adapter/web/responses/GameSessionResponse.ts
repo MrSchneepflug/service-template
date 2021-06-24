@@ -1,4 +1,4 @@
-import {Card} from "../../../application/entities/Card";
+import {Card} from "../../../application/domain/Card";
 
 export interface GameSessionResponse {
     readonly id: string;

@@ -1,4 +1,4 @@
-import {GameSession} from "../../src/application/entities/GameSession";
+import {GameSession} from "../../src/application/domain/GameSession";
 import {uuid} from "../../src/application/util/util";
 
 export function someGameSession(overrides: Partial<GameSession> = {}): GameSession {

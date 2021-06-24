@@ -1,6 +1,6 @@
-import {GameSession} from "../../../application/entities/GameSession";
+import {GameSession} from "../../../application/domain/GameSession";
 import {GameSession as GameSessionEntity} from "./entities/GameSession";
-import {Card} from "../../../application/entities/Card";
+import {Card} from "../../../application/domain/Card";
 import {Card as CardEntity} from "./entities/Card";
 import {injectable} from "inversify";
 

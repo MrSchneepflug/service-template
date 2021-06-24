@@ -1,5 +1,5 @@
 import {GameSessionResponse} from "./responses/GameSessionResponse";
-import {GameSession} from "../../application/entities/GameSession";
+import {GameSession} from "../../application/domain/GameSession";
 import {injectable} from "inversify";
 
 @injectable()

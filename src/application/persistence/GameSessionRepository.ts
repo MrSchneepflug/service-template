@@ -1,4 +1,4 @@
-import {GameSession} from "../entities/GameSession";
+import {GameSession} from "../domain/GameSession";
 
 export interface GameSessionRepository {
     load(sessionId: string): Promise<GameSession>;

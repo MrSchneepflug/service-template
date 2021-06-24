@@ -1,5 +1,5 @@
 import {GameSessionRepository} from "../../../src/application/persistence/GameSessionRepository";
-import {GameSession} from "../../../src/application/entities/GameSession";
+import {GameSession} from "../../../src/application/domain/GameSession";
 import {someGameSession} from "../../data/GameSession";
 import {Connection} from "typeorm";
 

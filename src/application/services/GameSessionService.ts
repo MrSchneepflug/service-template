@@ -1,7 +1,7 @@
 import {inject, injectable} from "inversify";
 import {TYPES} from "../../inversify.types";
 import {GameSessionRepository} from "../persistence/GameSessionRepository";
-import {GameSession} from "../entities/GameSession";
+import {GameSession} from "../domain/GameSession";
 
 @injectable()
 export class GameSessionService {

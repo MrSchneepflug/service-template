@@ -1,6 +1,6 @@
 import {injectable} from "inversify";
 import {GameSessionRepository} from "../../../application/persistence/GameSessionRepository";
-import {GameSession} from "../../../application/entities/GameSession";
+import {GameSession} from "../../../application/domain/GameSession";
 import {GameSession as GameSessionEntity} from "../postgres/entities/GameSession";
 import {Connection, Repository} from "typeorm";
 import {EntityMapper} from "./EntityMapper";

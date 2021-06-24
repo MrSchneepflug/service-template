@@ -1,5 +1,5 @@
 import {uuid} from "../../src/application/util/util";
-import {Card} from "../../src/application/entities/Card";
+import {Card} from "../../src/application/domain/Card";
 
 export function someCard(overrides: Partial<Card> = {}): Card {
     const defaults = {
