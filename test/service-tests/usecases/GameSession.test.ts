@@ -46,5 +46,21 @@ describe("game sessions", () => {
         expect(id).toEqual(gameSessionId);
         expect(done).toBe(true);
         expect(cards).toHaveLength(5);
+        expect(cards).toMatchObject([
+            {owner: "player", card: "🂽"},
+            {owner: "player", card: "🂱"},
+            {owner: "dealer", card: "🂪"},
+            {owner: "dealer", card: "🂩"},
+            {owner: "dealer", card: "🃍"},
+        ])
+    });
+
+    test("will respond with an error object if session was not found", async () => {
+        const someUnavailableGameSessionId = uuid();
+        const {status, data: {error}} = await apiActor.retrieveGameSession(someUnavailableGameSessionId);
+
+        expect(status).toEqual(404);
+        expect(error).toBeDefined();
+        console.log(error);
     });
 });

@@ -4,6 +4,7 @@ import {GameSession} from "../../../application/domain/GameSession";
 import {GameSession as GameSessionEntity} from "../postgres/entities/GameSession";
 import {Connection, Repository} from "typeorm";
 import {EntityMapper} from "./EntityMapper";
+import {SessionNotFoundError, SessionNotSavedError} from "./Errors";
 
 @injectable()
 export class PostgresGameSessionRepository implements GameSessionRepository {
@@ -17,7 +18,7 @@ export class PostgresGameSessionRepository implements GameSessionRepository {
         const gameSession = await this.repository.findOne(sessionId, {relations: ["cards"]});
 
         if (!gameSession) {
-            throw new Error(`session with id ${sessionId} not found.`);
+            throw new SessionNotFoundError(sessionId);
         }
 
         return this.entityMapper.toGameSession(gameSession);
@@ -25,6 +26,11 @@ export class PostgresGameSessionRepository implements GameSessionRepository {
 
     async save(gameSession: GameSession): Promise<void> {
         const gameSessionEntity = this.entityMapper.fromGameSession(gameSession);
-        await this.repository.save(gameSessionEntity);
+
+        try {
+            await this.repository.save(gameSessionEntity);
+        } catch (error) {
+            throw new SessionNotSavedError(gameSession.id, error);
+        }
     }
 }
