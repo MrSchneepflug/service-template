@@ -1,17 +1,18 @@
-import {injectable} from "inversify";
+import {inject, injectable} from "inversify";
 import {GameSessionRepository} from "../../../application/persistence/GameSessionRepository";
 import {GameSession} from "../../../application/domain/GameSession";
 import {GameSession as GameSessionEntity} from "../postgres/entities/GameSession";
-import {Connection, Repository} from "typeorm";
+import {Repository} from "typeorm";
 import {EntityMapper} from "./EntityMapper";
 import {SessionNotFoundError, SessionNotSavedError} from "./Errors";
+import {TYPES} from "../../../inversify.types";
 
 @injectable()
 export class PostgresGameSessionRepository implements GameSessionRepository {
-    private readonly repository: Repository<GameSessionEntity>;
-
-    constructor(private readonly entityMapper: EntityMapper, connection: Connection) {
-        this.repository = connection.getRepository(GameSessionEntity);
+    constructor(
+        private readonly entityMapper: EntityMapper,
+        @inject(TYPES.TypeormGameSessionRepository) private readonly repository: Repository<GameSessionEntity>,
+    ) {
     }
 
     async load(sessionId: string): Promise<GameSession> {

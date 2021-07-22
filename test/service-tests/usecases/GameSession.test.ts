@@ -61,6 +61,5 @@ describe("game sessions", () => {
 
         expect(status).toEqual(404);
         expect(error).toBeDefined();
-        console.log(error);
     });
 });

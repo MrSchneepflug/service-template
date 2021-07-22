@@ -15,6 +15,6 @@ export class PersistenceActor {
 
     async clearTables() {
         const tables = ["game_sessions", "cards"];
-        await Promise.all(tables.map(table => this.connection.query(`delete from ${table}`)));
+        await Promise.all(tables.map(table => this.connection.query(`TRUNCATE ${table} CASCADE`)));
     }
 }
